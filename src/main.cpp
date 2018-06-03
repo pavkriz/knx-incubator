@@ -44,13 +44,33 @@ void setup()
   Serial.println("Blink LED & count Demo");
 }
 
-void dumpTelegram() {
+void testParityAndFraming(int byteNumber, int byteWithParityAndStopBit)
+{
+  int parity = 0;
+  for (int i = 0; i < 8; i++) {
+    parity ^= ((byteWithParityAndStopBit>>i) & 1) ? 1 : 0; // XOR    
+  }
+  if (((byteWithParityAndStopBit & 256) >> 8) != parity) {
+    Serial.print("ERR: wrong parity bit in byte #");
+    Serial.println(byteNumber);
+  }
+  if ((byteWithParityAndStopBit & 512) == 0) {
+    Serial.print("ERR: wrong framing (no stop bit) in byte #");
+    Serial.println(byteNumber);
+  }
+}
+
+void dumpTelegram() 
+{
   if (previousLastByteTimestamp > 0) {
     Serial.println("========== GAP ==========");  
     Serial.print(firstByteTimestamp - previousLastByteTimestamp);
     Serial.println(" us");
   }
   Serial.println("========== KNX TELEGRAM ==========");
+  for (int i = 0; i < telegramLength; i++) {
+    testParityAndFraming(i, telegram[i]);
+  }
   Serial.print("RAW: ");
   for (int i = 0; i < telegramLength; i++) {
     Serial.print(telegram[i] & 255);
