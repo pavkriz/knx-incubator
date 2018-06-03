@@ -2,11 +2,17 @@
 
 ## KNX bus sniffer using Arduino Core on Maple Mini STM32
 
-TODO schematic
+Schematic: https://easyeda.com/pavel.kriz.cz/knx-bus-sniffer
 
 ### Osciloscope measurements
 
-TODO
+![scope1](doc/scope1.png?raw=true)
+
+![scope2](doc/scope2.png?raw=true)
+
+![scope3](doc/scope3.png?raw=true)
+
+![scope4](doc/scope4.png?raw=true)
 
 ### Sample logs from the sniffer
 
@@ -63,3 +69,7 @@ DST: 0/0/1
 NPDU: routing=6 length=1
 CMD: value write 1
 ```
+
+## Acknowledgement
+
+This work is supported by [hkfree.org](http://www.hkfree.org) community network.
